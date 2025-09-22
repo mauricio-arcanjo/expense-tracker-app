@@ -3,6 +3,7 @@ package com.mauarcanjo.expense.service.impl;
 import com.mauarcanjo.expense.dto.ExpenseDto;
 import com.mauarcanjo.expense.entity.Category;
 import com.mauarcanjo.expense.entity.Expense;
+import com.mauarcanjo.expense.exceptions.ResourceNotFoundException;
 import com.mauarcanjo.expense.mapper.CategoryMapper;
 import com.mauarcanjo.expense.mapper.ExpenseMapper;
 import com.mauarcanjo.expense.repository.CategoryRepository;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.ReadOnlyFileSystemException;
 import java.util.List;
 
 @AllArgsConstructor //Dependence injection for expenseRepository
@@ -58,7 +60,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             Category category = categoryRepository.findById(
                     expenseDto.categoryDto().id())
                     .orElseThrow(
-                            () -> new RuntimeException("Category not found with id: " + expenseDto.categoryDto().id())
+                            () -> new ResourceNotFoundException("Category not found with id: " + expenseDto.categoryDto().id())
                     );
 
             expense.setCategory(category);
@@ -74,7 +76,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     private Expense getExpense (Long id){
         return expenseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expense not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
     }
 
 }

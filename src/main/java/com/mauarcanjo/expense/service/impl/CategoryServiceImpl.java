@@ -2,6 +2,7 @@ package com.mauarcanjo.expense.service.impl;
 
 import com.mauarcanjo.expense.dto.CategoryDto;
 import com.mauarcanjo.expense.entity.Category;
+import com.mauarcanjo.expense.exceptions.ResourceNotFoundException;
 import com.mauarcanjo.expense.mapper.CategoryMapper;
 import com.mauarcanjo.expense.repository.CategoryRepository;
 import com.mauarcanjo.expense.service.CategoryService;
@@ -33,10 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = getCategory(categoryId);
 
-//                categoryRepository.findById(categoryId)
-//                .orElseThrow(
-//                        () -> new RuntimeException("Category not found with id: " + categoryId));
-
         return CategoryMapper.mapToCategoryDto(category);
     }
 
@@ -54,9 +51,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = getCategory(categoryDto.id());
 
-//                categoryRepository.findById(categoryDto.id())
-//                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryDto.id()));
-
         category.setName(categoryDto.name());
 
         return CategoryMapper.mapToCategoryDto(category);
@@ -71,7 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
     private Category getCategory(Long categoryId){
 
         return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
     }
 
 }
