@@ -62,7 +62,6 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryMapper.mapToCategoryDto(category);
     }
 
-    @Transactional
     public void deleteCategory(Long categoryId) {
 
         Category category = getCategory(categoryId);
