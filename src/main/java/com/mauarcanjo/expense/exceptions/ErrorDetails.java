@@ -1,11 +1,39 @@
 package com.mauarcanjo.expense.exceptions;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
-public record ErrorDetails(
-        LocalDateTime timestamp,
-        String message,
-        String details,
-        String errorCode
-) {
+@Schema(
+        description = "ErrorDetails DTO (Data Transfer Object) to " +
+                "transfer the error response data between client and server"
+)
+@Getter
+@Setter
+@AllArgsConstructor
+public class ErrorDetails {
+
+    @Schema(
+            description = "Error occurred date time"
+    )
+    private LocalDateTime timestamp;
+
+    @Schema(
+            description = "Error message"
+    )
+    private String message;
+
+    @Schema(
+            description = "Error details"
+    )
+    private String details;
+
+    @Schema(
+            description = "Error code"
+    )
+    private String errorCode;
+
 }
